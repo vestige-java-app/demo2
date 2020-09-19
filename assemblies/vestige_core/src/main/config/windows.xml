@@ -1,0 +1,52 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+  <id>windows</id>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <!-- vestige repo -->
+  <repositories>
+    <repository>
+      <outputDirectory>repository</outputDirectory>
+      <includeMetadata>true</includeMetadata>
+      <fileMode>0644</fileMode>
+      <directoryMode>0755</directoryMode>
+      <excludes>
+        <exclude>fr.gaellalire.vestige:vestige.core:jar</exclude>
+      </excludes>
+    </repository>
+  </repositories>
+  <fileSets>
+    <!-- unfiltered resources -->
+    <fileSet>
+      <directory>${basedir}/src/main/assembly/windows</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+      <excludes>
+        <exclude>.gitattributes</exclude>
+      </excludes>
+    </fileSet>
+    <!-- filtered resources -->
+    <fileSet>
+      <directory>${basedir}/target/classes/windows</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <!-- libraries -->
+  <dependencySets>
+    <dependencySet>
+      <useProjectArtifact>false</useProjectArtifact>
+      <useTransitiveDependencies>false</useTransitiveDependencies>
+      <outputDirectory>/lib</outputDirectory>
+      <includes>
+        <include>fr.gaellalire.vestige:vestige.core:jar</include>
+      </includes>
+    </dependencySet>
+  </dependencySets>
+</assembly>
