@@ -6,7 +6,6 @@ if [ "$DIRNAME" = "." ]; then
 fi
 
 DATADIR="$DIRNAME"
-CONFDIR="$DIRNAME"
 
 if [ "$JAVA" = "" ]; then
   JAVA=`which java`
@@ -26,11 +25,15 @@ fi
 DEMO2_OPTS=($JAVA_OPTS)
 DEMO2_ARGS=()
 
+export VESTIGE_CORE_RELATIVE_DIRECTORY="$DATADIR"
+
 if "$JAVA" --add-modules java.base -version >/dev/null 2>&1; then
+  export VESTIGE_CORE_MODULEPATH_FILE="$DATADIR/unix-classpath.txt"
   DEMO2_OPTS=("${DEMO2_OPTS[@]}" --add-modules ALL-DEFAULT)
-  DEMO2_ARGS=(-p "$DATADIR/lib/vestige.core-${vestige.core.version}.jar" -m fr.gaellalire.vestige.core frmp "$DATADIR" "$DATADIR/unix-classpath.txt" fr.gaellalire.vestige_app.demo2.mod1/fr.gaellalire.vestige_app.demo2.mod1.Mod1)
+  DEMO2_ARGS=(-p "$DATADIR/lib/vestige.core-${vestige.core.version}.jar" -m fr.gaellalire.vestige.core emp fr.gaellalire.vestige_app.demo2.mod1/fr.gaellalire.vestige_app.demo2.mod1.Mod1)
 else
-  DEMO2_ARGS=(-jar "$DATADIR/lib/vestige.core-${vestige.core.version}.jar" --before 'javax/xml/bind/.*' frcp "$DATADIR" "$DATADIR/unix-classpath.txt" fr.gaellalire.vestige_app.demo2.mod1.Mod1)
+  export VESTIGE_CORE_CLASSPATH_FILE="$DATADIR/unix-classpath.txt"
+  DEMO2_ARGS=(-jar "$DATADIR/lib/vestige.core-${vestige.core.version}.jar" --before 'javax/xml/bind/.*' ecp fr.gaellalire.vestige_app.demo2.mod1.Mod1)
 fi
 
 exec "$JAVA" "${DEMO2_OPTS[@]}" "${DEMO2_ARGS[@]}"
