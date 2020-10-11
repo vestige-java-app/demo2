@@ -102,6 +102,6 @@
     </dependency>
   </dependencies>
   <properties>
-    <vestige.core.version>7</vestige.core.version>
+    <vestige.core.version>8</vestige.core.version>
   </properties>
 </project>
